@@ -18,7 +18,7 @@
 
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>
-                {{ __('Enviar e-mail') }}
+                {{ __('Reestablecer') }}
             </x-primary-button>
         </div>
     </form>

@@ -19,13 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// ruta del panel de control
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-// rutas de perfil
+
+// rutas del usuario autenticado
 Route::middleware('auth')->group(function () {
+    // ruta del panel de control
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
