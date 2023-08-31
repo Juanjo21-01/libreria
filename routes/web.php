@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TiposProductoController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ProductoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,12 +28,21 @@ Route::middleware('auth')->group(function () {
     // ruta del panel de control
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
+    // rutas para el perfil del usuario    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // rutas para los tipos de productos
+    Route::resource('tipos-productos', TiposProductoController::class);  
+    
+    // rutas para los proveedores
+    Route::resource('proveedores', ProveedorController::class);
+    
+    // rutas para los productos
+    Route::resource('productos', ProductoController::class);
+    
+    
 });
-
-// 
-
 
 require __DIR__.'/auth.php';
