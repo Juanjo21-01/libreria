@@ -1,5 +1,5 @@
-<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary ">
-    <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
+<div class="sidebar border col-md-3 col-lg-2 p-0 bg-body-tertiary">
+    <div class="offcanvas-md offcanvas-end bg-body-tertiary " tabindex="-1" id="sidebarMenu"
         aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="sidebarMenuLabel">Libreria</h5>
@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('proveedores.index') }}">
                         <i class="bi bi-person-circle"></i>
                         Proveedores
                     </a>
@@ -42,7 +42,7 @@
             </ul>
 
             <h6
-                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-body-secondary text-uppercase">
                 <span>Reportes</span>
             </h6>
             <ul class="nav flex-column mb-auto ">
@@ -74,10 +74,9 @@
                         Perfil
                     </a>
                 </li>
-                <li class="nav-item text-center">
+                <li class="nav-item text-center my-md-5 py-md-4">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <a class="btn btn-danger m-1 bg-gradient" href="#"
                             onclick="event.preventDefault(); this.closest('form').submit();">
                             Cerrar Sesión
@@ -86,6 +85,7 @@
                     </form>
                 </li>
             </ul>
+            <hr class="my-2 border-0">
         </div>
     </div>
 </div>

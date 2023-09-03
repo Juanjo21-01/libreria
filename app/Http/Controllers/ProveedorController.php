@@ -3,62 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Proveedor;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // vista principal de proveedores
     public function index()
     {
-        //
+        $proveedores = Proveedor::all();
+        return view('proveedor.index', compact('proveedores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // vista para crear un nuevo proveedor
     public function create()
     {
-        //
+        $provedor = new Proveedor();
+        return view('proveedor.crear', compact('provedor'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // almacenar un nuevo proveedor
     public function store(Request $request)
     {
-        //
+        Proveedor::create($request->all());
+        return redirect()->route('proveedores.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // vista para editar un proveedor
     public function edit(string $id)
     {
-        //
+        $proveedor = Proveedor::find($id);
+        return view('proveedor.editar', compact('proveedor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // actualizar un proveedor
     public function update(Request $request, string $id)
     {
-        //
+        $proveedor = Proveedor::find($id);
+        $proveedor->update($request->all());
+        return redirect()->route('proveedores.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // vista para mostrar un proveedor
+    public function show(string $id)
+    {
+        $proveedor = Proveedor::find($id);
+        return view('proveedor.mostrar', compact('proveedor'));
+    }
+
+    // eliminar un proveedor
     public function destroy(string $id)
     {
-        //
+        $proveedor = Proveedor::find($id);
+        $proveedor->delete();
+        return redirect()->route('proveedores.index');
     }
 }
