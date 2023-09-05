@@ -3,62 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TiposProducto;
 
 class TiposProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // vista principal de tipos de producto
     public function index()
     {
-        //
+        $tiposProductos = TiposProducto::all();
+        return view('tipo_producto.index', compact('tiposProductos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // vista para crear un nuevo tipo de producto
     public function create()
     {
-        //
+        $tipoProducto = new TiposProducto();
+        return view('tipo_producto.crear', compact('tipoProducto'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // almacenar un nuevo tipo de producto
     public function store(Request $request)
     {
-        //
+        TiposProducto::create($request->all());
+        return redirect()->route('tipos-productos.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // vista para editar un tipo de producto
     public function edit(string $id)
     {
-        //
+        $tipoProducto = TiposProducto::find($id);
+        return view('tipo_producto.editar', compact('tipoProducto'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
+    // actualizar un tipo de producto
     public function update(Request $request, string $id)
     {
-        //
+        $tipoProducto = TiposProducto::find($id);
+        $tipoProducto->update($request->all());
+        return redirect()->route('tipos-productos.index');
+    }
+    
+    // vista para editar un tipo de producto
+    public function show(string $id)
+    {
+        $tipoProducto = TiposProducto::find($id);
+        return view('tipo_producto.mostrar', compact('tipoProducto'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // eliminar un tipo de producto
     public function destroy(string $id)
     {
-        //
+        $tipoProducto = TiposProducto::find($id);
+        $tipoProducto->delete();
+        return redirect()->route('tipos-productos.index');
     }
 }
