@@ -2,7 +2,11 @@
     <h1 class="text-primary my-4">Tipos de Productos</h1>
 
     <!-- agregar nuevo tipoProducto ---->
-    <section class="row align-items-center justify-content-md-end g-3 mb-4">
+    <section class="row align-items-center justify-content-md-between g-3 mb-4">
+        <div class="col-auto">
+            <a href="{{ route('productos.index') }}" class="btn btn-secondary bg-gradient"> <i
+                    class="bi bi-arrow-repeat me-2"></i>Productos</a>
+        </div>
         <div class="col-auto">
             <div class="d-flex  align-items-center">
                 <a href="{{ route('tipos-productos.create') }}" class="btn btn-success bg-gradient"> <i
@@ -42,6 +46,7 @@
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
+                            </td>
                         </tr>
                         <!-- Modal -->
                         <div class="modal fade" id="eliminar-tipoProducto-{{ $tipoProducto->id }}"

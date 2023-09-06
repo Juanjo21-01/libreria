@@ -66,7 +66,7 @@
                     <div class="row mb-3 align-items-center">
                         <div class="col-12 col-lg-6 text-center">
                             <h3>{{ $proveedor->nombre }}</h3>
-                            <p>Se Unió en {{ $proveedor->created_at->toFormattedDateString() }}</p>
+                            <p>Se Creó en {{ $proveedor->created_at->toFormattedDateString() }}</p>
                         </div>
                         <div class="col-12 col-lg-6 border-start border-3">
                             <div class="py-2">

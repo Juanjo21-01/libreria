@@ -46,6 +46,7 @@
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </div>
+                            </td>
                         </tr>
                         <!-- Modal -->
                         <div class="modal fade" id="eliminar-proveedor-{{ $proveedor->id }}" data-bs-backdrop="static"
