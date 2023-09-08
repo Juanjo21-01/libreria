@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TiposProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CompraController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +43,9 @@ Route::middleware('auth')->group(function () {
     // rutas para los productos
     Route::resource('productos', ProductoController::class);
     
-    
+    // rutas para las compras
+    Route::resource('compras', CompraController::class);
+
 });
 
 require __DIR__.'/auth.php';

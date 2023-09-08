@@ -43,7 +43,7 @@ class TiposProductoController extends Controller
         return redirect()->route('tipos-productos.index');
     }
     
-    // vista para editar un tipo de producto
+    // vista para mostrar un tipo de producto
     public function show(string $id)
     {
         $tipoProducto = TiposProducto::find($id);

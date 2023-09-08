@@ -17,7 +17,11 @@
     <header class="navbar sticky-top bg-dark  p-0 shadow" data-bs-theme="dark">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-4 text-white bg-body-tertiary"
             href="{{ route('dashboard') }}">Libreria</a>
-
+        <button class="nav-link px-3 text-white d-md-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
+            aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
     </header>
 
     <!-- Contenido de la página -->

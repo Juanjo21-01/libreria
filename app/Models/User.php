@@ -42,4 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relacion uno a muchos con la tabla compras
+    public function compras(): HasMany
+    {
+        return $this->hasMany(Compra::class);
+    }
+
 }

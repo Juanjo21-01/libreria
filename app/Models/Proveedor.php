@@ -51,4 +51,10 @@ class Proveedor extends Model
     {
         return $this->hasMany(Producto::class);
     }
+
+    // Relacion uno a muchos con la tabla compras
+    public function compras(): HasMany
+    {
+        return $this->hasMany(Compra::class);
+    }
 }

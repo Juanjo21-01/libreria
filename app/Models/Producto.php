@@ -59,4 +59,10 @@ class Producto extends Model
     {
         return $this->belongsTo(Proveedor::class);
     }
+
+    // Relacion uno a muchos con la tabla detalle compras
+    public function detalleCompras(): HasMany
+    {
+        return $this->hasMany(DetalleCompra::class);
+    }
 }
