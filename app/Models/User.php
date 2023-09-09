@@ -49,4 +49,10 @@ class User extends Authenticatable
         return $this->hasMany(Compra::class);
     }
 
+    // Relacion uno a muchos con la tabla ventas
+    public function ventas(): HasMany
+    {
+        return $this->hasMany(Venta::class);
+    }
+
 }

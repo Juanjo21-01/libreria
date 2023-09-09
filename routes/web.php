@@ -6,6 +6,8 @@ use App\Http\Controllers\TiposProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\VentaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +47,9 @@ Route::middleware('auth')->group(function () {
     
     // rutas para las compras
     Route::resource('compras', CompraController::class);
+
+    // rutas para las ventas
+    Route::resource('ventas', VentaController::class);
 
 });
 

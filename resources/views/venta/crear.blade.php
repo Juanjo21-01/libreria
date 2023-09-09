@@ -1,29 +1,14 @@
 <x-app-layout>
     <section class="row py-4 bg-body-tertiary">
-        <h2 class="text-success">Registrar Compra</h2>
+        <h2 class="text-success">Registrar Venta</h2>
         <hr class="my-4 ">
 
-        <!-- Formulario de registro de la compra ---->
-        <form method="POST" action="{{ route('compras.store') }}" role="form" enctype="multipart/form-data">
+        <!-- Formulario de registro de la venta ---->
+        <form method="POST" action="{{ route('ventas.store') }}" role="form" enctype="multipart/form-data">
             @csrf
 
-            <!-- Proveedor y producto de la compra ---->
+            <!-- Producto y cantidad de la venta ---->
             <div class="row mb-3 align-items-center">
-                <div class="col-12 col-sm-6">
-                    <div class="row align-items-center">
-                        <x-input-label for="proveedor_id" value="Proveedor"
-                            class="col-sm-2 col-form-label pe-0 fw-semibold" />
-                        <div class="col-sm-10">
-                            <select class="form-select" name="proveedor_id" id="proveedor_id" required>
-                                <option value="0" disabled selected>Seleccione un proveedor</option>
-                                @foreach ($proveedores as $id => $proveedor)
-                                    <option value="{{ $id }}">{{ $proveedor }}</option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('proveedor_id')" class="mt-2" />
-                        </div>
-                    </div>
-                </div>
                 <div class="col-12 col-sm-6">
                     <div class="row">
                         <x-input-label for="producto_id" value="Producto"
@@ -39,11 +24,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Cantidad y precio de productos que se compraron y fecha_compra de la compra ---->
-            <div class="row mb-3 align-items-center">
-                <div class="col-6 col-lg-5">
+                <div class="col-12 col-sm-6">
                     <div class="row align-items-center">
                         <x-input-label for="cantidad" value="Cantidad de Productos"
                             class="col-sm-2 col-form-label pe-0 fw-semibold" />
@@ -54,7 +35,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-4">
+            </div>
+
+            <!-- Precio de la venta ---->
+            <div class="row mb-3 align-items-center">
+                <div class="col-6 col-lg-3">
                     <div class="row">
                         <x-input-label for="precio" value="Precio" class="col-sm-2 col-form-label pe-0 fw-semibold" />
                         <div class="col-sm-10">
@@ -64,40 +49,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-3">
-                    <!-- Fecha de la compra ---->
+                <div class="col-6 col-lg-3">
+                    <!-- Fecha de la venta ---->
                     <div class="row">
-                        <x-input-label for="fecha_compra" value="Fecha"
+                        <x-input-label for="fecha_venta" value="Fecha"
                             class="col-sm-2 col-form-label pe-0 fw-semibold" />
                         <div class="col-sm-10">
-                            <x-text-input id="fecha_compra" type="date" name="fecha_compra" :value="old('fecha_compra')"
-                                required autofocus />
-                            <x-input-error :messages="$errors->get('fecha_compra')" class="mt-2" />
+                            <x-text-input id="fecha_venta" type="date" name="fecha_venta" :value="old('fecha_venta')" required
+                                autofocus />
+                            <x-input-error :messages="$errors->get('fecha_venta')" class="mt-2" />
                         </div>
                     </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <!-- Descripcion de la venta ---->
 
-
+                    <div class="row mb-3 align-items-center justify-content-center">
+                        <x-input-label for="observacion" value="Observaciones"
+                            class="col-sm-2 col-form-label me-2 fw-semibold" />
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="observacion" id="observacion" rows="3">{{ old('observacion') }}</textarea>
+                            <x-input-error :messages="$errors->get('observacion')" class="mt-2" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Descripcion de la compra ---->
-            <div class="row mb-3 align-items-center">
-                <x-input-label for="observacion" value="Observaciones"
-                    class="col-sm-2 col-form-label pe-0 fw-semibold" />
-                <div class="col-sm-10">
-                    <textarea class="form-control" name="observacion" id="observacion" rows="3">{{ old('observacion') }}</textarea>
-                    <x-input-error :messages="$errors->get('observacion')" class="mt-2" />
-                </div>
-            </div>
-
-
-            {{-- Detalle de las compras --}}
+            {{-- Detalle de las ventas --}}
             <div class="card">
                 <div class="card-header shadow-sm text-center">
                     <button type="button" id="agregar" class="btn btn-primary">Agregar Producto</button>
                 </div>
                 <div class="card-body shadow">
-                    <h4 class="card-tittle">Detalles de Compra</h4>
+                    <h4 class="card-tittle">Detalles de Venta</h4>
                     <div class="table-responsive col-md-12">
                         <table class="table table-sm table-striped table-hover table-bordered">
                             <thead class="thead">
@@ -146,7 +130,7 @@
 
             <!-- Botones ---->
             <div class="d-flex justify-content-evenly mt-5">
-                <a href="{{ route('compras.index') }}" class="btn btn-danger"><i class="bi bi-x-square"></i>
+                <a href="{{ route('ventas.index') }}" class="btn btn-danger"><i class="bi bi-x-square"></i>
                     Cancelar</a>
 
                 <x-btn-exito id="guardar"><i class="bi bi-arrow-up-square"></i></i> Registrar </x-btn-exito>
@@ -164,7 +148,7 @@
                     total = 0,
                     subtotal = [];
 
-                // ocultar el boton para guardar la compra
+                // ocultar el boton para guardar la venta
                 const guardarBtn = document.getElementById("guardar");
                 guardarBtn.style.display = "none";
 

@@ -65,4 +65,10 @@ class Producto extends Model
     {
         return $this->hasMany(DetalleCompra::class);
     }
+
+    // Relacion uno a muchos con la tabla detalle ventas
+    public function detalleVentas(): HasMany
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
 }
