@@ -47,13 +47,14 @@
             </h6>
             <ul class="nav flex-column mb-auto ">
                 <li class="nav-item ">
-                    <a class="nav-link d-flex align-items-center gap-2 text-success" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2 text-success" href="{{ route('reporte.dia') }}">
                         <i class="bi bi-calendar-check"></i>
                         Hoy
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-success" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2 text-success"
+                        href="{{ route('reporte.fecha') }}">
                         <i class="bi bi-calendar3"></i>
                         Fecha
                     </a>
