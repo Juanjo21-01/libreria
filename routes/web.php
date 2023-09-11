@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 // rutas del usuario autenticado
 Route::middleware('auth')->group(function () {
     // ruta del panel de control
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // rutas para el perfil del usuario    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
