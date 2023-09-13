@@ -1,5 +1,5 @@
 <x-app-layout>
-    <h1 class="text-primary my-4">Bienvenid@ {{ auth()->user()->name }}</h1>
+    <h1 class="text-primary my-3    ">Bienvenid@ {{ auth()->user()->name }}</h1>
 
     <!-- Consultas de productos ---->
     <section class="card shadow">
@@ -128,111 +128,114 @@
     </section>
 
     <!-- Cantidad de ventas y compras diarias ---->
-    <section class="card shadow mt-4">
-        <div class="card-header">
-            <h4 class="card-title">Cantidad de ventas y compras diarias</h4>
-        </div>
-        <div class="card-body">
-            <canvas id="cantidadVentasCompras" width="auto" height="100"></canvas>
-        </div>
-    </section>
+    @role('Administrador')
+        <section class="card shadow mt-4">
+            <div class="card-header">
+                <h4 class="card-title">Cantidad de ventas y compras diarias</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="cantidadVentasCompras" width="auto" height="100"></canvas>
+            </div>
+        </section>
 
-    <!-- Total de ventas y compras diarias ---->
-    <section class="card shadow my-4">
-        <div class="card-header">
-            <h4 class="card-title">Total de ventas y compras diarias</h4>
-        </div>
-        <div class="card-body">
-            <canvas id="totalVentasComnpras" width="auto" height="100"></canvas>
-        </div>
-    </section>
+        <!-- Total de ventas y compras diarias ---->
+        <section class="card shadow my-4">
+            <div class="card-header">
+                <h4 class="card-title">Total de ventas y compras diarias</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="totalVentasComnpras" width="auto" height="100"></canvas>
+            </div>
+        </section>
 
-    <!-- Scripts ---->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const cantidad = document.getElementById('cantidadVentasCompras').getContext('2d');
-        new Chart(cantidad, {
-            type: 'line',
-            data: {
-                labels: [<?php foreach ($ventasdia as $reg) {
-                    $dia = $reg->dia;
-                    echo '"' . $dia . '",';
-                } ?>],
-                datasets: [{
-                    label: 'Ventas',
-                    data: [<?php foreach ($ventasdia as $reg) {
-                        echo '' . $reg->cantidad . ',';
+        <!-- Scripts ---->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const cantidad = document.getElementById('cantidadVentasCompras').getContext('2d');
+            new Chart(cantidad, {
+                type: 'line',
+                data: {
+                    labels: [<?php foreach ($ventasdia as $reg) {
+                        $dia = $reg->dia;
+                        echo '"' . $dia . '",';
                     } ?>],
-                    borderColor: '#198754',
-                    borderWidth: 3
-                }, {
-                    label: 'Compras',
-                    data: [<?php foreach ($comprasdia as $reg) {
-                        echo '' . $reg->cantidad . ',';
-                    } ?>],
-                    borderColor: '#dc3545',
-                    borderWidth: 3
-                }, ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    datasets: [{
+                        label: 'Ventas',
+                        data: [<?php foreach ($ventasdia as $reg) {
+                            echo '' . $reg->cantidad . ',';
+                        } ?>],
+                        borderColor: '#198754',
+                        borderWidth: 3
+                    }, {
+                        label: 'Compras',
+                        data: [<?php foreach ($comprasdia as $reg) {
+                            echo '' . $reg->cantidad . ',';
+                        } ?>],
+                        borderColor: '#dc3545',
+                        borderWidth: 3
+                    }, ]
                 },
-                elements: {
-                    point: {
-                        radius: 6,
-                        borderwidth: 4,
-                        backgroundColor: 'white',
-                        hoverRadius: 8,
-                        hoverBorderWidth: 4,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 6,
+                            borderwidth: 4,
+                            backgroundColor: 'white',
+                            hoverRadius: 8,
+                            hoverBorderWidth: 4,
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        const total = document.getElementById('totalVentasComnpras').getContext('2d');
-        new Chart(total, {
-            type: 'line',
-            data: {
-                labels: [<?php foreach ($ventasdia as $reg) {
-                    $dia = $reg->dia;
-                    echo '"' . $dia . '",';
-                } ?>],
-                datasets: [{
-                    label: 'Ventas',
-                    data: [<?php foreach ($ventasdia as $reg) {
-                        echo '' . $reg->totaldia . ',';
+            const total = document.getElementById('totalVentasComnpras').getContext('2d');
+            new Chart(total, {
+                type: 'line',
+                data: {
+                    labels: [<?php foreach ($ventasdia as $reg) {
+                        $dia = $reg->dia;
+                        echo '"' . $dia . '",';
                     } ?>],
-                    borderColor: '#198754',
-                    borderWidth: 3
-                }, {
-                    label: 'Compras',
-                    data: [<?php foreach ($comprasdia as $reg) {
-                        echo '' . $reg->totaldia . ',';
-                    } ?>],
-                    borderColor: '#dc3545',
-                    borderWidth: 3
-                }, ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    datasets: [{
+                        label: 'Ventas',
+                        data: [<?php foreach ($ventasdia as $reg) {
+                            echo '' . $reg->totaldia . ',';
+                        } ?>],
+                        borderColor: '#198754',
+                        borderWidth: 3
+                    }, {
+                        label: 'Compras',
+                        data: [<?php foreach ($comprasdia as $reg) {
+                            echo '' . $reg->totaldia . ',';
+                        } ?>],
+                        borderColor: '#dc3545',
+                        borderWidth: 3
+                    }, ]
                 },
-                elements: {
-                    point: {
-                        radius: 6,
-                        borderwidth: 4,
-                        backgroundColor: 'white',
-                        hoverRadius: 8,
-                        hoverBorderWidth: 4,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 6,
+                            borderwidth: 4,
+                            backgroundColor: 'white',
+                            hoverRadius: 8,
+                            hoverBorderWidth: 4,
+                        }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    @endrole
+
 
 </x-app-layout>

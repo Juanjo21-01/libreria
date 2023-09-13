@@ -36,15 +36,17 @@
                             <td class="col-2 align-middle">{{ $proveedor->telefono }}</td>
                             <td class="col-2 align-middle">
                                 <div class="d-flex justify-content-evenly flex-column flex-sm-row align-items-center">
-                                    <a href="{{ route('proveedores.edit', $proveedor->id) }}"
-                                        class="btn btn-outline-success mb-1 mb-sm-0"> <i
-                                            class="bi bi-pencil-square"></i></a>
                                     <a href="{{ route('proveedores.show', $proveedor->id) }}"
                                         class="btn btn-outline-primary mb-1 mb-sm-0 mx-1"><i class="bi bi-eye"></i></a>
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#eliminar-proveedor-{{ $proveedor->id }}">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </button>
+                                    @role('Administrador')
+                                        <a href="{{ route('proveedores.edit', $proveedor->id) }}"
+                                            class="btn btn-outline-success mb-1 mb-sm-0"> <i
+                                                class="bi bi-pencil-square"></i></a>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#eliminar-proveedor-{{ $proveedor->id }}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    @endrole
                                 </div>
                             </td>
                         </tr>

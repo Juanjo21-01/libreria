@@ -18,5 +18,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // Guardar los roles en la base de datos
+        $this->call(RoleSeeder::class);
+
+        // Guardar el usuario administrador en la base de datos
+        $this->call(UserAdminSeeder::class);
     }
 }

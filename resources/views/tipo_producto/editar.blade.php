@@ -1,46 +1,57 @@
 <x-app-layout>
-    <section class="row py-4 bg-body-tertiary">
-        <h2 class="text-success">Editar Tipo de Producto</h2>
-        <hr class="my-4 ">
+    @role('Administrador')
+        <section class="row py-4 bg-body-tertiary">
+            <h2 class="text-success">Editar Tipo de Producto</h2>
+            <hr class="my-4 ">
 
-        <!-- Formulario de registro de Tipo de Producto ---->
-        <form method="POST" action="{{ route('tipos-productos.update', $tipoProducto->id) }}" role="form"
-            enctype="multipart/form-data">
-            @csrf
-            @method('patch')
+            <!-- Formulario de registro de Tipo de Producto ---->
+            <form method="POST" action="{{ route('tipos-productos.update', $tipoProducto->id) }}" role="form"
+                enctype="multipart/form-data">
+                @csrf
+                @method('patch')
 
-            <p class="text-secondary">Información del Tipo de Producto: {{ $tipoProducto->nombre }}</p>
+                <p class="text-secondary">Información del Tipo de Producto: {{ $tipoProducto->nombre }}</p>
 
-            <!-- Nombre del Tipo de Producto ---->
-            <div class="row mb-3">
-                <x-input-label for="nombre" value="Nombre" class="col-sm-2 col-form-label pe-0 fw-semibold" />
-                <div class="col-sm-10">
-                    <x-text-input id="nombre" type="text" name="nombre" :value="old('nombre', $tipoProducto->nombre)" required autofocus
-                        minlength='5' maxlength="45" />
-                    <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                <!-- Nombre del Tipo de Producto ---->
+                <div class="row mb-3">
+                    <x-input-label for="nombre" value="Nombre" class="col-sm-2 col-form-label pe-0 fw-semibold" />
+                    <div class="col-sm-10">
+                        <x-text-input id="nombre" type="text" name="nombre" :value="old('nombre', $tipoProducto->nombre)" required autofocus
+                            minlength='5' maxlength="45" />
+                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                    </div>
                 </div>
-            </div>
 
-            <!-- Descripcion del Tipo de Producto ---->
-            <div class="row mb-3">
-                <x-input-label for="descripcion" value="Descripcion" class="col-sm-2 col-form-label pe-0 fw-semibold" />
-                <div class="col-sm-10">
-                    <x-text-input id="descripcion" type="text" name="descripcion" :value="old('descripcion', $tipoProducto->descripcion)" required
-                        autofocus minlength='5' maxlength="45" />
-                    <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                <!-- Descripcion del Tipo de Producto ---->
+                <div class="row mb-3">
+                    <x-input-label for="descripcion" value="Descripcion" class="col-sm-2 col-form-label pe-0 fw-semibold" />
+                    <div class="col-sm-10">
+                        <x-text-input id="descripcion" type="text" name="descripcion" :value="old('descripcion', $tipoProducto->descripcion)" required
+                            autofocus minlength='5' maxlength="45" />
+                        <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                    </div>
                 </div>
+
+
+
+                <!-- Botones ---->
+                <div class="d-flex justify-content-evenly">
+                    <a href="{{ route('tipos-productos.index') }}" class="btn btn-danger"><i class="bi bi-x-square"></i>
+                        Cancelar</a>
+
+                    <x-btn-exito><i class="bi bi-arrow-up-square"></i></i> Registrar </x-btn-exito>
+                </div>
+
+            </form>
+        </section>
+    @endrole
+
+    @role('Vendedor')
+        <seciont class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-success m-5 p-5">No estas autorizado para editar el registro</h2>
+                <a class="btn btn-primary m-5" href="{{ route('tipos-productos.index') }}">Regresar</a>
             </div>
-
-
-
-            <!-- Botones ---->
-            <div class="d-flex justify-content-evenly">
-                <a href="{{ route('tipos-productos.index') }}" class="btn btn-danger"><i class="bi bi-x-square"></i>
-                    Cancelar</a>
-
-                <x-btn-exito><i class="bi bi-arrow-up-square"></i></i> Registrar </x-btn-exito>
-            </div>
-
-        </form>
-    </section>
+        </seciont>
+    @endrole
 </x-app-layout>
