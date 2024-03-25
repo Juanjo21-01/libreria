@@ -57,4 +57,18 @@ class TiposProductoController extends Controller
         $tipoProducto->delete();
         return redirect()->route('tipos-productos.index');
     }
+
+    // cambiar el estado de un tipo de producto
+    public function cambiarEstado(string $id)
+    {
+        $tipoProducto = TiposProducto::find($id);
+        
+        if ($tipoProducto->estado == 'activo') {
+            $tipoProducto->update(['estado' => 'inactivo']);
+        } else {
+            $tipoProducto->update(['estado' => 'activo']);
+        }
+
+        return redirect()->back();
+    }
 }

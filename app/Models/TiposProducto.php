@@ -17,7 +17,8 @@ class TiposProducto extends Model
     // Campos de la tabla
     protected $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion',
+        'estado'
     ];
 
 

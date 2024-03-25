@@ -22,8 +22,10 @@ class ProductoController extends Controller
     public function create()
     {
         $producto = new Producto();
-        $tiposProductos = TiposProducto::pluck('nombre', 'id');
-        $proveedores = Proveedor::pluck('nombre', 'id');
+
+        $tiposProductos = TiposProducto::where('estado', 1)->pluck('nombre', 'id');
+        $proveedores = Proveedor::where('estado', 1)->pluck('nombre', 'id');
+
         return view('producto.crear', compact('producto', 'tiposProductos', 'proveedores'));
     }
 

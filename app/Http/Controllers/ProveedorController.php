@@ -57,4 +57,18 @@ class ProveedorController extends Controller
         $proveedor->delete();
         return redirect()->route('proveedores.index');
     }
+
+    // cambiar el estado de un proveedor
+    public function cambiarEstado(string $id)
+    {
+        $proveedor = Proveedor::find($id);
+
+        if ($proveedor->estado == 'activo') {
+            $proveedor->update(['estado' => 'inactivo']);
+        } else {
+            $proveedor->update(['estado' => 'activo']);
+        }
+        
+        return redirect()->back();
+    }
 }

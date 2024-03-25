@@ -23,8 +23,9 @@
                 <thead>
                     <tr>
                         <th class="col-2 shadow text-center">ID</th>
-                        <th class="col-4 shadow">Nombre</th>
-                        <th class="col-4 shadow">Descripcion</th>
+                        <th class="col-3 shadow">Nombre</th>
+                        <th class="col-3 shadow">Descripcion</th>
+                        <th class="col-2 shadow text-center">Estado</th>
                         <th class="col-2 shadow text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -32,8 +33,21 @@
                     @foreach ($tiposProductos as $tipoProducto)
                         <tr>
                             <td class="col-2 text-center align-middle">{{ $tipoProducto->id }}</td>
-                            <td class="col-4 align-middle">{{ $tipoProducto->nombre }}</td>
-                            <td class="col-4 align-middle">{{ $tipoProducto->descripcion }}</td>
+                            <td class="col-3 align-middle">{{ $tipoProducto->nombre }}</td>
+                            <td class="col-3 align-middle">{{ $tipoProducto->descripcion }}</td>
+                            <td class="col-2 text-center align-middle">
+                                @if ($tipoProducto->estado == 'activo')
+                                    <a class="btn btn-success btn-sm bg-gradient"
+                                        href="{{ route('tipos-productos.cambiar-estado', $tipoProducto->id) }}"><i
+                                            class="bi bi-check-circle"></i>
+                                        ACTIVO</a>
+                                @else
+                                    <a class="btn btn-danger btn-sm bg-gradient"
+                                        href="{{ route('tipos-productos.cambiar-estado', $tipoProducto->id) }}"><i
+                                            class="bi bi-x-circle"></i>
+                                        INACTIVO</a>
+                                @endif
+                            </td>
                             <td class="col-2 align-middle">
                                 <div class="d-flex justify-content-evenly flex-column flex-sm-row align-items-center">
                                     <a href="{{ route('tipos-productos.show', $tipoProducto->id) }}"
@@ -55,7 +69,8 @@
                             data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
-                                <form method="post" action="{{ route('tipos-productos.destroy', $tipoProducto->id) }}">
+                                <form method="post"
+                                    action="{{ route('tipos-productos.destroy', $tipoProducto->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <div class="modal-content">

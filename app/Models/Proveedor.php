@@ -20,6 +20,7 @@ class Proveedor extends Model
         'nit',
         'direccion',
         'telefono',
+        'estado'
     ];
 
 

@@ -38,9 +38,11 @@ Route::middleware('auth')->group(function () {
     
     // rutas para los tipos de productos
     Route::resource('tipos-productos', TiposProductoController::class);  
+    Route::get('cambiar-estado/tipos-productos/{tipoProducto}', [TiposProductoController::class, 'cambiarEstado'])->name('tipos-productos.cambiar-estado');
     
     // rutas para los proveedores
     Route::resource('proveedores', ProveedorController::class);
+    Route::get('cambiar-estado/proveedores/{proveedor}', [ProveedorController::class, 'cambiarEstado'])->name('proveedores.cambiar-estado');
     
     // rutas para los productos
     Route::resource('productos', ProductoController::class);

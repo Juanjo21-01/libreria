@@ -19,10 +19,11 @@
                 <thead>
                     <tr>
                         <th class="col-1 shadow text-center">ID</th>
-                        <th class="col-3 shadow">Nombre</th>
+                        <th class="col-2 shadow">Nombre</th>
                         <th class="col-1 shadow">Nit</th>
                         <th class="col-3 shadow">Dirección</th>
-                        <th class="col-2 shadow">Telefono</th>
+                        <th class="col-1 shadow">Telefono</th>
+                        <th class="col-2 shadow text-center">Estado</th>
                         <th class="col-2 shadow text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -30,10 +31,24 @@
                     @foreach ($proveedores as $proveedor)
                         <tr>
                             <td class="col-1 text-center align-middle">{{ $proveedor->id }}</td>
-                            <td class="col-3 align-middle">{{ $proveedor->nombre }}</td>
+                            <td class="col-2 align-middle">{{ $proveedor->nombre }}</td>
                             <td class="col-1 align-middle">{{ $proveedor->nit }}</td>
                             <td class="col-3 align-middle">{{ $proveedor->direccion }}</td>
                             <td class="col-2 align-middle">{{ $proveedor->telefono }}</td>
+                            <td class="col-1 text-center align-middle">
+                                @if ($proveedor->estado == 'activo')
+                                    <a class="btn btn-success btn-sm bg-gradient"
+                                        href="{{ route('proveedores.cambiar-estado', $proveedor->id) }}"><i
+                                            class="bi bi-check-circle"></i>
+                                        ACTIVO</a>
+                                @else
+                                    <a class="btn btn-danger btn-sm bg-gradient"
+                                        href="{{ route('proveedores.cambiar-estado', $proveedor->id) }}"><i
+                                            class="bi bi-x-circle"></i>
+                                        INACTIVO</a>
+                                @endif
+
+                            </td>
                             <td class="col-2 align-middle">
                                 <div class="d-flex justify-content-evenly flex-column flex-sm-row align-items-center">
                                     <a href="{{ route('proveedores.show', $proveedor->id) }}"
