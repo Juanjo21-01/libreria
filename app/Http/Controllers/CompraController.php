@@ -8,6 +8,7 @@ use App\Models\Proveedor;
 use App\Models\User;
 use App\Models\Producto;
 use App\Models\DetalleCompra;
+use Illuminate\Support\Facades\DB;
 
 class CompraController extends Controller
 {
@@ -31,20 +32,54 @@ class CompraController extends Controller
     // almacenar una nueva compra
     public function store(Request $request)
     {
-        $compra = Compra::create($request->except('producto_id', 'cantidad', 'precio') + [
-            'usuario_id' => auth()->user()->id,
-            'impuesto' => '0.12',
-        ]);
+        // TRANSACCION
 
-        // iterar los productos a comprar
-        foreach ($request->producto_id as $key => $producto) {
-            $detalle[] = array("producto_id" => $request->producto_id[$key], "cantidad" => $request->cantidad[$key], "precio" => $request->precio[$key]);
+        // Iniciar la transacción
+        DB::beginTransaction();
+
+        try {
+            // Crear la compra
+             $compra = Compra::create($request->except('producto_id', 'cantidad', 'precio') + [
+                'usuario_id' => auth()->user()->id,
+                'impuesto' => '0.12',
+            ]);
+        
+            // iterar los productos a comprar
+            foreach ($request->producto_id as $key => $producto) {
+                $detalle[] = array("producto_id" => $request->producto_id[$key], "cantidad" => $request->cantidad[$key], "precio" => $request->precio[$key]);
+            }
+
+            // Si el precio unitario es menor a 0 en algún producto
+            foreach ($detalle as $item) {
+                $producto = Producto::find($item['producto_id']);
+                if ($item['precio'] < 0) 
+                    throw new \Exception('El precio no puede ser menor a 0 del producto: ' . $producto->nombre);
+            }
+
+            // Si la cantidad en stock es menor a 0 en algún producto 
+            foreach ($detalle as $item) {
+                $producto = Producto::find($item['producto_id']);
+                if ($item['cantidad'] < 0) 
+                    throw new \Exception('La cantidad en stock no puede ser menor a 0 del producto: ' . $producto->nombre);
+            }
+
+            // Si la compra no se pudo crear
+            if (!$compra) 
+                throw new \Exception('No se pudo crear la compra');
+
+            // guardar los productos a comprar
+            $compra->detalleCompra()->createMany($detalle);
+
+            // Si no hay errores, hacer commit
+            DB::commit();
+
+            return redirect()->route('compras.index')->with('success', 'Compra creada correctamente');
+
+        } catch (\Exception $e) {
+            // Si hay errores, hacer rollback
+            DB::rollback();
+            return redirect()->route('compras.index')->with('error', 'Error al almacenar la Compra: '. $e->getMessage());
         }
-
-        // guardar los productos a comprar
-        $compra->detalleCompra()->createMany($detalle);
-
-        return redirect()->route('compras.index');
     }
 
     // vista para mostrar una compra

@@ -41,7 +41,7 @@
                             class="col-sm-3 col-form-label pe-0 fw-semibold" />
                         <div class="col-sm-9">
                             <x-text-input id="precio_unitario" type="number" name="precio_unitario" :value="old('precio_unitario')"
-                                required autofocus min="0" step="0.01" />
+                                required autofocus step="0.01" />
                             <x-input-error :messages="$errors->get('precio_unitario')" class="mt-2" />
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             class="col-sm-2 col-form-label pe-0 fw-semibold text-md-end" />
                         <div class="col-sm-10">
                             <x-text-input id="stock" type="number" name="stock" :value="old('stock')" required
-                                autofocus min="0" step="1" />
+                                autofocus step="1" />
                             <x-input-error :messages="$errors->get('stock')" class="mt-2" />
                         </div>
                     </div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\TiposProducto;
 use App\Models\Proveedor;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductoController extends Controller
 {
@@ -32,8 +34,38 @@ class ProductoController extends Controller
     // almacenar un nuevo producto
     public function store(Request $request)
     {
-        Producto::create($request->all());
-        return redirect()->route('productos.index');
+        // TRANSACCION 
+
+        // Iniciar la transacción
+        DB::beginTransaction();
+
+        try {
+            // Crear el producto
+            $producto = Producto::create($request->all());
+
+            // Si el precio unitario es menor a 0
+            if ($producto->precio_unitario < 0) 
+                throw new \Exception('El precio no puede ser menor a 0');
+
+            // Si la cantidad en stock es menor a 0
+            if ($producto->stock < 0) 
+                throw new \Exception('La cantidad en stock no puede ser menor a 0');
+            
+            // Si el producto no se pudo crear
+            if (!$producto) 
+                throw new \Exception('No se pudo crear el producto');
+            
+
+            // Si no hay errores, hacer commit
+            DB::commit();
+            
+            return redirect()->route('productos.index')->with('success', 'Producto creado correctamente');
+        } catch (\Exception $e) {
+            // Si hay errores, hacer rollback
+            DB::rollBack();
+
+            return redirect()->route('productos.index')->with('error', 'Error al almacenar el Producto: '. $e->getMessage());
+        }
     }
 
     // vista para editar un producto

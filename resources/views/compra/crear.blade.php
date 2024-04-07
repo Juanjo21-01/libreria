@@ -166,7 +166,7 @@
 
                 // ocultar el boton para guardar la compra
                 const guardarBtn = document.getElementById("guardar");
-                guardarBtn.style.display = "none";
+                // guardarBtn.style.display = "none";
 
                 // funcion para agregar productos al detalle
                 function agregarProducto() {
@@ -181,7 +181,7 @@
                     const precio = parseFloat(document.getElementById("precio").value);
 
 
-                    if (producto_id !== "" && !isNaN(cantidad) && cantidad > 0 && !isNaN(precio) && precio !== "") {
+                    if (producto_id !== "" && !isNaN(cantidad) && !isNaN(precio) && precio !== "") {
                         subtotal[cont] = cantidad * precio;
                         total += subtotal[cont];
                         let fila =
@@ -208,7 +208,7 @@
                         cont++;
                         limpiar();
                         totales();
-                        evaluar();
+                        // evaluar();
                         document.getElementById("detalles").innerHTML += fila;
                     } else {
                         alert(
@@ -249,7 +249,7 @@
                     document.getElementById("total_pagar").value = total_pagar_html.toFixed(2);
                     let fila = document.getElementById("fila" + index);
                     fila.parentNode.removeChild(fila);
-                    evaluar();
+                    // evaluar();
                 }
             </script>
         </form>

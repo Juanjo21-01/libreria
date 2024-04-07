@@ -7,6 +7,7 @@ use App\Models\Venta;
 use App\Models\User;
 use App\Models\Producto;
 use App\Models\DetalleVenta;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -29,20 +30,61 @@ class VentaController extends Controller
     // almacenar una nueva venta
     public function store(Request $request)
     {
-        $venta = Venta::create($request->except('producto_id', 'cantidad', 'precio') + [
-            'usuario_id' => auth()->user()->id,
-            'impuesto' => '0.12',
-        ]);
+        // TRANSACCION
 
-        // iterar los productos a vender
-        foreach ($request->producto_id as $key => $producto) {
-            $detalle[] = array("producto_id" => $request->producto_id[$key], "cantidad" => $request->cantidad[$key], "precio" => $request->precio[$key]);
+        // Iniciar la transacción
+        DB::beginTransaction();
+
+        try {
+            // Crear la venta
+            $venta = Venta::create($request->except('producto_id', 'cantidad', 'precio') + [
+                'usuario_id' => auth()->user()->id,
+                'impuesto' => '0.12',
+            ]);
+
+            // iterar los productos a vender
+            foreach ($request->producto_id as $key => $producto) {
+                $detalle[] = array("producto_id" => $request->producto_id[$key], "cantidad" => $request->cantidad[$key], "precio" => $request->precio[$key]);
+            }
+
+            // Si el precio unitario es menor a 0 en algún producto
+            foreach ($detalle as $item) {
+                $producto = Producto::find($item['producto_id']);
+                if ($item['precio'] < 0) 
+                    throw new \Exception('El precio no puede ser menor a 0 del producto: ' . $producto->nombre);
+            }
+
+            // Si la cantidad en stock es menor a 0 en algún producto 
+            foreach ($detalle as $item) {
+                $producto = Producto::find($item['producto_id']);
+                if ($item['cantidad'] <= 0) 
+                    throw new \Exception('La cantidad en stock no puede ser menor a 0 del producto: ' . $producto->nombre);
+            }
+
+            // Si la cantidad en stock es menor a la cantidad a vender
+            foreach ($detalle as $item) {
+                $producto = Producto::find($item['producto_id']);
+                if ($item['cantidad'] > $producto->stock) 
+                    throw new \Exception('No hay suficiente Stock del producto: ' . $producto->nombre);
+            }
+
+            // Si la venta no se pudo crear
+            if (!$venta) 
+                throw new \Exception('No se pudo crear la venta');
+
+            // guardar los productos a vender
+            $venta->detalleVenta()->createMany($detalle);
+
+            // Si no hay errores, hacer commit
+            DB::commit();
+
+            return redirect()->route('ventas.index')->with('success', 'Venta realizada correctamente');
+
+        } catch (\Exception $e) {
+            // Si hay errores, hacer rollback
+            DB::rollBack();
+            return redirect()->route('ventas.index')->with('error', 'Error al realizar la venta: ' . $e->getMessage());
         }
-
-        // guardar los productos a vender
-        $venta->detalleVenta()->createMany($detalle);
-
-        return redirect()->route('ventas.index');
     }
 
     // vista para mostrar una venta

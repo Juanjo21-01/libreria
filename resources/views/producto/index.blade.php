@@ -1,6 +1,21 @@
 <x-app-layout>
     <h1 class="text-primary my-4">Productos</h1>
 
+    {{-- Mensajes --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session('success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('error') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- agregar nuevo producto ---->
     <section class="row align-items-center justify-content-md-between g-3 mb-4">
         <div class="col-auto">
@@ -129,4 +144,14 @@
             </table>
         </div>
     </section>
+
+    <script>
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+
 </x-app-layout>
